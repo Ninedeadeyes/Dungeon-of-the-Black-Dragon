@@ -497,3 +497,4 @@ else:
     print("You unlock the door and is granted your reward. 'Freedom'")
     print("You have escaped the Dungeon of the Black Dragon. Thank you for playing ")
     input("Press enter to exit")
+                                                        ###https://github.com/Ninedeadeyes/Dungeon-of-the-Black-Dragon
