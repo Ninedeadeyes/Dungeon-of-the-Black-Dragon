@@ -19,7 +19,7 @@ gameloop=True
 dragon_alive=True
 Items=[]
 
-x = 1                 #y and x starting position. Remember it is reversed becuase 0,0 is top right corner. 
+x = 1                 #y and x starting position. Remember 0,0 is top right corner. 
 y = 3
 
 dungeonMap = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],
