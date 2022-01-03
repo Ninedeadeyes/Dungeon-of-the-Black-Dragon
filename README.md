@@ -1,2 +1,4 @@
-# Dungeon-of-the-Black-Dragon
-2D ASCII Dungeon crawler written in standard library, with only two modules imported ( Random to simulate dice rolls and os to clear screen ) This is my simplest expression of 2D graphics. 
+# Dungeon-of-the-Black-Dragon 1.01 
+2D ASCII Dungeon crawler written in standard library. This is my simplest expression of 2D graphics with music. 
+
+Music written using beepbox 
