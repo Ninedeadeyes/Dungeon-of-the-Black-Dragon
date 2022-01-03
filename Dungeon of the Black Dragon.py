@@ -1,6 +1,5 @@
-import os
-import random
-hero_health=[100]
+import os,random,winsound
+hero_health=[120]
 alive1=True
 alive2=True
 alive3=True
@@ -18,7 +17,6 @@ Bronze_key=False
 gameloop=True
 dragon_alive=True
 Items=[]
-
 x = 1                 #y and x starting position. Remember 0,0 is top right corner. 
 y = 3
 
@@ -42,7 +40,6 @@ dungeonMap = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","
               ["0",".",".","0",".",".","0","0",".",".",".","0",".",".","0","0","!","0"],
               ["0","5",".","0",".",".","3",".","4",".",".","0",".",".","6",".","E","0"],
               ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"]]
-
 
 playerMap  = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],
               ["0",".",".","0","0",".",".",".",".",".",".","0",".",".",".",".",".","0"],
@@ -134,6 +131,7 @@ mapChoice = dungeonMap  #selecting a map
 
 position = mapChoice[x][y]  #initialising the players position
 
+winsound.PlaySound(".\\music\\background.wav",  winsound.SND_ALIAS | winsound.SND_ASYNC +winsound.SND_LOOP)
 print ("""
                               THE DUNGEON OF THE BLACK DRAGON
                               
