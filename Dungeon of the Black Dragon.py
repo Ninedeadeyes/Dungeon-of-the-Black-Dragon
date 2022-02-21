@@ -1,8 +1,7 @@
-import os,random,winsound
+import random,os,sys,winsound
 hero_health=[120]
 alive1=True
 alive2=True
-alive3=True
 alive4=True
 alive5=True
 alive6=True
@@ -16,6 +15,8 @@ Gold_key=False
 Bronze_key=False
 gameloop=True
 dragon_alive=True
+
+music=0
 Items=[]
 x = 1                 #y and x starting position. Remember 0,0 is top right corner. 
 y = 3
@@ -38,7 +39,7 @@ dungeonMap = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","
               ["0",".",".","0",".",".","0","0",".",".",".","!",".",".","0","!","0","0"],
               ["0",".",".","0",".",".","0","0",".","B",".","!",".",".","0","!","!","0"],
               ["0",".",".","0",".",".","0","0",".",".",".","0",".",".","0","0","!","0"],
-              ["0","5",".","0",".",".","3",".","4",".",".","0",".",".","6",".","E","0"],
+              ["0","5",".","0",".",".",".",".","4",".",".","0",".",".","6",".","E","0"],
               ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"]]
 
 playerMap  = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],
@@ -74,7 +75,7 @@ def order(bag):
         print (x+1,bag[x]) 
     
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')   # For windows can just use os.system('cls')
+    print("\033c", end="")    
     displayMap(playerMap) 
 
 def alive_monster(enemy,damage,low,high,defense):
@@ -115,7 +116,7 @@ def alive_monster(enemy,damage,low,high,defense):
         print("Wounds upon wounds, you have fallen")
         print("           GAME OVER                ")
         input("Press enter to Exit game")
-        exit()
+        sys.exit()
 
     if bone_club==False:
         print("You need to escape and find a weapon to defeat the",enemy)    
@@ -131,6 +132,8 @@ mapChoice = dungeonMap  #selecting a map
 
 position = mapChoice[x][y]  #initialising the players position
 
+os.system("mode con cols=100 lines=30") # resize screen so that clear_screen works 
+
 winsound.PlaySound(".\\music\\background.wav",  winsound.SND_ALIAS | winsound.SND_ASYNC +winsound.SND_LOOP)
 print ("""
                               THE DUNGEON OF THE BLACK DRAGON
@@ -143,7 +146,7 @@ input("Press enter to begin your struggle")
 clear_screen()
 print("                                                                                      ")
 print("         Instruction: Press 'Enter' after input to perform the action ")
-
+print("                      Press 'M' to toggle music on/off                  ")
 while gameloop == True:
     
     previousX = x
@@ -151,32 +154,46 @@ while gameloop == True:
     playerMap[y][x] = "."
     print("                      ")
     print("Health:",hero_health[0])
-    movement = input("W,S,D,A,ITEMS: ",).upper()
-    
+    movement = input("W,S,D,A,M,ITEMS: ",).upper()
+
+
+   
     if movement == "W":
         y = y-1
         position = mapChoice[y][x]
         playerMap[y][x] = "@"
 
-    if movement == "S":
+    elif movement == "S":
         y = y+1
         position = mapChoice[y][x]
         playerMap[y][x] = "@"
  
-    if movement == "D":
+    elif movement == "D":
         x = x+1
         position = mapChoice[y][x]
         playerMap[y][x] = "@"
 
-    if movement == "A":
+    elif movement == "A":
         x = x-1
         position = mapChoice[y][x]
         playerMap[y][x] = "@"
   
-    if movement =="ITEMS":   
+    elif movement =="ITEMS":   
         playerMap[y][x] = "@"
         order(Items)
         input("press enter to continue")
+
+    elif movement == "M":
+        if music==0:
+            playerMap[y][x] = "@"
+            winsound.PlaySound(None,winsound.SND_ALIAS)
+            music=1       
+        else:
+            playerMap[y][x] = "@"
+            winsound.PlaySound(".\\music\\background.wav",  winsound.SND_ALIAS | winsound.SND_ASYNC +winsound.SND_LOOP)
+            music=0
+
+
 
     if position == "E":
         if  Silver_key ==True and Gold_key==True and Bronze_key==True:
@@ -312,7 +329,7 @@ while gameloop == True:
             y = previousY
             playerMap[y][x] = "@"
             clear_screen()
-            alive_monster("Hungry Ghoul",random.randint(15,25),10,15,5)
+            alive_monster("Hungry Ghoul",random.randint(15,25),10,15,7)
            
             if bone_club==True:
                 print("You smash the Ghoul in the ribs with such force")
@@ -345,27 +362,6 @@ while gameloop == True:
             clear_screen()
             dead_monster("Bog Imp")
 
-    if position == "3":
-        currentX=x
-        currentY=y
-        if alive3==True:
-            playerMap[y][x] = "I"
-            x = previousX
-            y = previousY
-            playerMap[y][x] = "@"
-            clear_screen()
-            alive_monster("Psychotic Bog Imp",random.randint(5,15),2,8,3)
-
-            if bone_club==True:
-                print("You smash your club into the Imp's legs")
-                print("tearing both limbs clean off and then deliver the kiling blow" )
-                playerMap[currentY][currentX]="X"
-                alive3=False
-        else:
-            playerMap[y][x] = "@"
-            clear_screen()
-            dead_monster("Bog Imp")
-
     if position == "4":
         currentX=x
         currentY=y
@@ -375,7 +371,7 @@ while gameloop == True:
                y = previousY
                playerMap[y][x] = "@"
                clear_screen()
-               alive_monster("Mutant Ghoul",random.randint(15,25),10,15,5)
+               alive_monster("Psychotic Ghoul",random.randint(18,30),12,18,7)
                
                if bone_club==True:
                    print("You smash the Ghoul in the face with your bone club")
