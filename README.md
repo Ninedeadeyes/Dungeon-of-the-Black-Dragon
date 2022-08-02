@@ -3,4 +3,4 @@
 
 Music written using beepbox 
 
-Work inspired by YouTuber (Learn to Code GCSE). Even though his version was a Text based adventure, I originally had the idea from looking a his code.  
+Work inspired by YouTuber (Learn to Code GCSE). Even though his version was a text based adventure, I originally had the idea from looking a his code.  
