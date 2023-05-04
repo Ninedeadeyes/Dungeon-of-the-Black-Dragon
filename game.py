@@ -126,7 +126,9 @@ def dead_monster(enemy):
 
 def displayMap(maps):    #Displaying the map
     for x in range(0,20):
-        print(maps[x])
+        map_row=str(maps[x]).replace(',', '').replace("'"," ").replace("."," ").replace("0","#")
+        print(map_row)  
+
 
 mapChoice = dungeonMap  #selecting a map
 
