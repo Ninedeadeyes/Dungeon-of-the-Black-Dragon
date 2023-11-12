@@ -22,12 +22,12 @@ x = 1                 #y and x starting position. Remember 0,0 is top right corn
 y = 3
 
 dungeonMap = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],
-              ["0",".","7","0","0","£","£","£","£","£","£","0","£","£","£","£",".","0"],
-              ["0",".",".","0","0","£","£","£","£","£","£","0","£","£","0",".",".","0"],
-              ["0",".",".",".",".",".",".",".","0",".",".","!","£","£","0",".",".","0"],
+              ["0",".","7","0","0","D","D","D","D","D","D","!","D","D","D","D",".","0"],
+              ["0",".",".","0","0","D","D","D","D","D","D","!","D","D","0",".",".","0"],
+              ["0",".",".",".",".",".",".",".","0",".",".","!","D","D","0",".",".","0"],
               ["0",".",".","0","0",".",".",".","0",".",".","!",".",".","0",".",".","0"],
               ["0","0","0","0","0","0",".","0","0","0","0","0",".",".","0",".",".","0"],
-              ["0","8",".",".","0",".",".",".","0",".",".","0",".",".","0",".","G","0"],
+              ["0","8",".",".","0",".","I",".","0",".",".","0",".",".","0",".","G","0"],
               ["0",".",".",".","0",".",".",".","0",".",".","0","0",".","0","0","0","0"],
               ["0",".",".",".","0",".",".",".","0",".",".","0","0",".","0",".",".","0"],
               ["0","0","0","!","!",".",".","9","0",".",".",".","1",".",".",".",".","0"],
@@ -37,9 +37,9 @@ dungeonMap = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","
               ["0",".",".",".",".",".",".","0",".",".",".","0",".",".",".",".",".","0"],
               ["0",".","0","0",".",".","0","0","0",".","0","0",".",".",".","2",".","0"],  
               ["0",".",".","0",".",".","0","0",".",".",".","!",".",".","0","!","0","0"],
-              ["0",".",".","0",".",".","0","0",".","B",".","!",".",".","0","!","!","0"],
-              ["0",".",".","0",".",".","0","0",".",".",".","0",".",".","0","0","!","0"],
-              ["0","5",".","0",".",".",".",".","4",".",".","0",".",".","6",".","E","0"],
+              ["0",".",".","0",".",".","0","0",".","B",".","!",".",".","!","!","!","0"],
+              ["0",".",".","0",".",".","0","0",".",".",".","!",".",".","0","0","!","0"],
+              ["0","5",".","0",".",".",".",".","4",".",".","!",".",".","6",".","E","0"],
               ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"]]
 
 playerMap  = [["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],
@@ -67,12 +67,7 @@ intro=["There is only the stench of death and decay here","You look for deadly t
       "Stricken by grief, you wonder if you will ever leave this wicked dungeon","Wait..You hear something.. Or is it just the sound of your mind breaking..","These cold walls seems to drain even 'hope' itself","The darkness is overwhelming, how long can you last ?","You think you found something useful..You were mistaken",
       "You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on",
       "You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on",
-      "You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on",
       "You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on","You find nothing of interest here, you continue on"]
-
-def order(bag):
-    for x in range(len(bag)): 
-        print (x+1,bag[x]) 
     
 def clear_screen():
     print("\033c", end="")    
@@ -126,9 +121,8 @@ def dead_monster(enemy):
 
 def displayMap(maps):    #Displaying the map
     for x in range(0,20):
-        map_row=str(maps[x]).replace(',', '').replace("'"," ").replace("."," ").replace("0","#")
+        map_row=str(maps[x]).replace(',',"").replace("'"," ").replace("."," ").replace("0","#")
         print(map_row)  
-
 
 mapChoice = dungeonMap  #selecting a map
 
@@ -144,11 +138,16 @@ Thrown into the dungeon of the black dragon for the entertainment of the elites.
 You must fight through the horrors of the dungeon and find your escape.
 May the light guide you !!!
 """)
-input("Press enter to begin your struggle")                                                                                         
-clear_screen()
+
 print("                                                                                      ")
-print("         Instruction: Press 'Enter' after input to perform the action ")
-print("                      Press 'M' to toggle music on/off                  ")
+print("Instruction: Press 'Enter' after input to perform the action ")
+print("             Press 'M' to toggle music on/off                  ")
+print("                                                                                      ")
+input("Press enter to begin your struggle") 
+clear_screen()
+
+print("You get up from the floor, you see a mound of 'something'")
+print("In the north east corner of the room..")
 while gameloop == True:
     
     previousX = x
@@ -156,10 +155,9 @@ while gameloop == True:
     playerMap[y][x] = "."
     print("                      ")
     print("Health:",hero_health[0])
-    movement = input("W,S,D,A,M,ITEMS: ",).upper()
+    print("ITEMS: "+str(Items))
+    movement = input("W,S,D,A,M: ",).upper()
 
-
-   
     if movement == "W":
         y = y-1
         position = mapChoice[y][x]
@@ -179,11 +177,6 @@ while gameloop == True:
         x = x-1
         position = mapChoice[y][x]
         playerMap[y][x] = "@"
-  
-    elif movement =="ITEMS":   
-        playerMap[y][x] = "@"
-        order(Items)
-        input("press enter to continue")
 
     elif movement == "M":
         if music==0:
@@ -195,10 +188,15 @@ while gameloop == True:
             winsound.PlaySound(".\\music\\background.wav",  winsound.SND_ALIAS | winsound.SND_ASYNC +winsound.SND_LOOP)
             music=0
 
-
-
+    if position == "I":
+        playerMap[y][x] = "@"
+        clear_screen()
+        print("You hear some strange gibberish. Someone is in this room")
+        print("which direction will you go ?")  
+        
     if position == "E":
         if  Silver_key ==True and Gold_key==True and Bronze_key==True:
+            winsound.PlaySound(".\\music\\ending.wav",  winsound.SND_ALIAS | winsound.SND_ASYNC +winsound.SND_LOOP)
             break
             
         else:    
@@ -288,7 +286,7 @@ while gameloop == True:
         clear_screen()
         print("You are at a wall and you cannot pass.")
 
-    if position == "£":
+    if position == "D":
         if lantern==False:
             playerMap[y][x] = "."
             x = previousX
@@ -485,7 +483,7 @@ while gameloop == True:
 if dragon_alive==False:
     print("                                                         ")
     print("You have slayed the Black Dragon and escaped the dungeon ")
-    print("You have upset the elites but they grudgingly offer your reward. Your freedom'")
+    print("You have upset the elites but they grudgingly offer you your reward. Your freedom'")
     print("With a bagful of the dragon's treasure, you walk away filthy rich. Thank you for playing ")
     input("Press enter to exit")
 else:
@@ -493,4 +491,5 @@ else:
     print("You unlock the door and is granted your reward. 'Freedom'")
     print("You have escaped the Dungeon of the Black Dragon. Thank you for playing ")
     input("Press enter to exit")
-                                                        ###https://github.com/Ninedeadeyes/Dungeon-of-the-Black-Dragon
+
+                                       ###https://github.com/Ninedeadeyes/Dungeon-of-the-Black-Dragon
